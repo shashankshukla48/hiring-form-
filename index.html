@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -326,6 +326,26 @@
       .candidate-signature-print {
         display: none;
       }
+      .education-pdf-table,
+      .experience-pdf-table {
+        display: none;
+      }
+      .declaration-box {
+        margin: 10px 0;
+        padding: 14px;
+        border: 1px solid #8fa6ae;
+        border-radius: 10px;
+        color: #17333e;
+        background: #f7fafb;
+        font-size: 11px;
+        line-height: 1.55;
+      }
+      .declaration-box label {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+      }
+      .declaration-box input { margin-top: 3px; }
       .check-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -401,6 +421,47 @@
       .mini-line.short {
         width: 60%;
       }
+      .submission-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: grid;
+        place-items: center;
+        padding: 18px;
+        background: rgba(2, 29, 39, 0.58);
+      }
+      .submission-dialog {
+        width: min(420px, 100%);
+        padding: 28px 24px 22px;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 20px 55px rgba(0, 25, 34, 0.28);
+        text-align: center;
+      }
+      .submission-check {
+        display: grid;
+        place-items: center;
+        width: 68px;
+        height: 68px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        color: #fff;
+        background: #1fa463;
+        font-size: 34px;
+      }
+      .submission-dialog h2 { margin: 0 0 7px; color: #12333d; font-size: 22px; }
+      .submission-dialog p { margin: 0; color: #526a73; font-size: 12px; }
+      .submission-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px; }
+      .submission-actions button {
+        min-height: 44px;
+        border: 1px solid #087b79;
+        border-radius: 9px;
+        color: #087b79;
+        background: #fff;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .submission-actions .modal-primary { color: #fff; background: #087b79; }
       .toast-note {
         position: fixed;
         right: 22px;
@@ -774,6 +835,26 @@
       .candidate-signature-print {
         display: none;
       }
+      .education-pdf-table,
+      .experience-pdf-table {
+        display: none;
+      }
+      .declaration-box {
+        margin: 10px 0;
+        padding: 14px;
+        border: 1px solid #8fa6ae;
+        border-radius: 10px;
+        color: #17333e;
+        background: #f7fafb;
+        font-size: 11px;
+        line-height: 1.55;
+      }
+      .declaration-box label {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+      }
+      .declaration-box input { margin-top: 3px; }
       .check-grid {
           grid-template-columns: 1fr;
         }
@@ -1363,6 +1444,7 @@
         .repeater-actions { display: grid; grid-template-columns: 1fr; gap: 8px; }
         .add-row, .fresher-button { width: 100%; min-height: 44px; }
         .candidate-signature-print { display: none; }
+        .submission-actions { grid-template-columns: 1fr; }
       }
       @media screen and (max-width: 420px) {
         .app-layout { padding: 5px; }
@@ -1378,7 +1460,7 @@
         * { text-shadow: none !important; box-shadow: none !important; filter: none !important; animation: none !important; transition: none !important; }
         html, body { width: auto; margin: 0; padding: 0; color: #000; background: #fff !important; font-family: Arial, sans-serif; font-size: 8pt; }
         .app-header { min-height: 0; padding: 0 0 3mm; border-bottom: 1px solid #000; color: #000; background: #fff !important; }
-        .brand-mark, .brand small, .header-title small, .header-actions, .form-intro, .section-head i, .section-head small, .section-chevron, .repeater-actions, .add-row, .fresher-button, .remove-row, .toast-note { display: none !important; }
+        .brand-mark, .brand small, .header-title small, .header-actions, .form-intro, .section-head i, .section-head small, .section-chevron, .repeater-actions, .add-row, .fresher-button, .remove-row, .submission-modal, .toast-note { display: none !important; }
         .brand strong, .header-title strong { color: #000 !important; font-size: 10pt; }
         .app-layout { display: block; width: 100%; margin: 2mm 0 0; }
         .form-column { overflow: visible; border: 0; border-radius: 0; color: #000; background: #fff !important; }
@@ -1395,6 +1477,42 @@
         .repeat-table th, .repeat-table td { height: auto; padding: .6mm .8mm; border: .2mm solid #888; color: #000; background: #fff !important; }
         .repeat-table .form-control { height: 4.5mm; min-height: 4.5mm; border: 0 !important; font-size: 7pt; }
         .repeat-table th:last-child, .repeat-table td:last-child { display: none; }
+        .education-table, .employment-table { display: none !important; }
+        .education-pdf-table,
+        .experience-pdf-table {
+          display: table !important;
+          width: 100%;
+          border-collapse: collapse;
+          table-layout: fixed;
+          font-size: 7pt;
+        }
+        .education-pdf-table thead, .experience-pdf-table thead { display: table-header-group; }
+        .education-pdf-table tr, .experience-pdf-table tr { break-inside: avoid; page-break-inside: avoid; }
+        .education-pdf-table th,
+        .education-pdf-table td,
+        .experience-pdf-table th,
+        .experience-pdf-table td {
+          padding: 1.2mm 1mm;
+          border: .25mm solid #666;
+          color: #000;
+          text-align: left;
+          vertical-align: middle;
+          overflow-wrap: anywhere;
+        }
+        .education-pdf-table th, .experience-pdf-table th { background: #eee !important; font-weight: 700; }
+        .fresher-status { display: none !important; }
+        .declaration-box {
+          margin: 3mm 0 0;
+          padding: 3mm;
+          border: .3mm solid #000;
+          border-radius: 0;
+          color: #000;
+          background: #fff !important;
+          font-size: 7.5pt;
+          break-inside: avoid;
+          page-break-inside: avoid;
+        }
+        .declaration-box input { display: none; }
 
         .repeat-table thead { display: table-header-group !important; }
         .repeat-table tr { break-inside: avoid; page-break-inside: avoid; }
@@ -1508,6 +1626,7 @@
         assetsIssued: "",
         remarks: "",
         isFresher: false,
+        declarationAccepted: false,
       };
 
       const groups = {
@@ -1744,6 +1863,7 @@
             : [blankEmployment()],
         );
         const [toast, setToast] = useState("");
+        const [submissionSuccess, setSubmissionSuccess] = useState(false);
         const generatedAt = new Date().toLocaleString("en-IN");
         const set = (key, value) =>
           setData((current) => ({ ...current, [key]: value }));
@@ -1873,15 +1993,7 @@ This summary is system generated by IMPOST INDIA HRMS for official employment re
               body: JSON.stringify(payload),
             });
 
-            setData(initial);
-            setEducation([
-              blankEducation("10th"),
-              blankEducation("12th / Diploma"),
-              blankEducation("Bachelor's"),
-            ]);
-            setEmployment([blankEmployment()]);
-            localStorage.removeItem("impost_hiring_form");
-            note("Details submitted. Form is ready for a new entry");
+            setSubmissionSuccess(true);
           } catch (error) {
             console.error("Google Sheet submission failed:", error);
             note("Submission failed. Check the internet connection");
@@ -1972,6 +2084,28 @@ This summary is system generated by IMPOST INDIA HRMS for official employment re
                     rows={education}
                     setRows={setEducation}
                   />
+                  <table className="education-pdf-table">
+                    <thead>
+                      <tr>
+                        <th>Qualification</th>
+                        <th>Institution</th>
+                        <th>Board / University</th>
+                        <th>Passing Year</th>
+                        <th>Percentage / CGPA</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {education.map((row, index) => (
+                        <tr key={`pdf-education-${index}`}>
+                          <td>{row.qualification || ""}</td>
+                          <td>{row.institution || ""}</td>
+                          <td>{row.board || ""}</td>
+                          <td>{row.year || ""}</td>
+                          <td>{row.score || ""}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </FormSection>
                 <FormSection
                   icon="bi-building-check"
@@ -1989,6 +2123,30 @@ This summary is system generated by IMPOST INDIA HRMS for official employment re
                       if (next) setEmployment([blankEmployment()]);
                     }}
                   />
+                  <table className="experience-pdf-table">
+                    <thead>
+                      <tr>
+                        <th>Company</th>
+                        <th>Designation</th>
+                        <th>Joining Date</th>
+                        <th>Relieving Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.isFresher ? (
+                        <tr><td colSpan="4">Fresher — No previous work experience</td></tr>
+                      ) : (
+                        employment.map((row, index) => (
+                          <tr key={`pdf-employment-${index}`}>
+                            <td>{row.company || ""}</td>
+                            <td>{row.designation || ""}</td>
+                            <td>{row.joining || ""}</td>
+                            <td>{row.relieving || ""}</td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
                 </FormSection>
                 <FormSection
                   icon="bi-lightbulb"
@@ -2015,6 +2173,18 @@ This summary is system generated by IMPOST INDIA HRMS for official employment re
                 >
                   <FieldGroup specs={groups.bank} data={data} set={set} />
                 </FormSection>
+                <div className="declaration-box">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={Boolean(data.declarationAccepted)}
+                      onChange={(e) => set("declarationAccepted", e.target.checked)}
+                    />
+                    <span>
+                      <strong>Declaration:</strong> I declare that all information provided in this form is true, complete and correct to the best of my knowledge. I understand that incorrect information may result in rejection or termination of employment.
+                    </span>
+                  </label>
+                </div>
                 <div className="candidate-signature-print">
                   <p>
                     I confirm that the information provided in this form is complete and correct.
@@ -2023,6 +2193,38 @@ This summary is system generated by IMPOST INDIA HRMS for official employment re
                 </div>
               </main>
             </div>
+            {submissionSuccess && (
+              <div className="submission-modal" role="dialog" aria-modal="true" aria-labelledby="submission-title">
+                <div className="submission-dialog">
+                  <div className="submission-check"><i className="bi bi-check-lg" /></div>
+                  <h2 id="submission-title">Form submitted</h2>
+                  <p>The employee details were sent successfully.</p>
+                  <div className="submission-actions">
+                    <button type="button" onClick={() => window.print()}>
+                      <i className="bi bi-download" /> Download PDF
+                    </button>
+                    <button
+                      type="button"
+                      className="modal-primary"
+                      onClick={() => {
+                        setSubmissionSuccess(false);
+                        setData(initial);
+                        setEducation([
+                          blankEducation("10th"),
+                          blankEducation("12th / Diploma"),
+                          blankEducation("Bachelor's"),
+                        ]);
+                        setEmployment([blankEmployment()]);
+                        localStorage.removeItem("impost_hiring_form");
+                        note("Form is ready for a new entry");
+                      }}
+                    >
+                      OK
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
             {toast && (
               <div className="toast-note">
                 <i className="bi bi-info-circle" /> {toast}
@@ -2035,6 +2237,9 @@ This summary is system generated by IMPOST INDIA HRMS for official employment re
     </script>
   </body>
 </html>
+
+
+
 
 
 
