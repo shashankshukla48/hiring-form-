@@ -1,16 +1,7 @@
-FROM node:26-alpine
+FROM nginx:alpine
 
-WORKDIR /app
+COPY . /usr/share/nginx/html
 
-COPY . .
+EXPOSE 80
 
-RUN mkdir -p /app/data && chown -R node:node /app
-
-USER node
-
-ENV NODE_ENV=production
-ENV PORT=3000
-
-EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]
